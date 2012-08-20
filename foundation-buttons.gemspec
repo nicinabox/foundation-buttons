@@ -14,4 +14,6 @@ Gem::Specification.new do |gem|
   gem.name          = "foundation-buttons"
   gem.require_paths = ["lib"]
   gem.version       = Foundation::Buttons::VERSION
+
+  gem.add_dependency 'compass', '~> 0.12'
 end
