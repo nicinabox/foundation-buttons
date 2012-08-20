@@ -1,0 +1,19 @@
+@import "simple";
+
+@mixin button ($base-color: #4294f0) {
+
+  // Grayscale button
+  @if $base-color == grayscale($base-color) {
+    @include simple($base-color, $grayscale: true);
+  }
+
+  // Colored button
+  @else {
+    @include simple($base-color);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}

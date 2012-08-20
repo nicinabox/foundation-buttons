@@ -1,0 +1,55 @@
+@mixin simple($base-color, $grayscale: false) {
+  $color:         hsl(0, 0, 100%);
+  $border:        adjust-color($base-color, $saturation:  9%,  $lightness: -14%);
+  $inset-shadow:  adjust-color($base-color, $saturation: -8%,  $lightness:  15%);
+  $stop-gradient: adjust-color($base-color, $saturation:  9%,  $lightness: -11%);
+  $text-shadow:   adjust-color($base-color, $saturation:  15%, $lightness: -18%);
+
+  @if lightness($base-color) > 70% {
+    $color:       hsl(0, 0, 20%);
+    $text-shadow: adjust-color($base-color, $saturation: 10%, $lightness: 4%);
+  }
+
+  @if $grayscale == true {
+    $border:        grayscale($border);
+    $inset-shadow:  grayscale($inset-shadow);
+    $stop-gradient: grayscale($stop-gradient);
+    $text-shadow:   grayscale($text-shadow);
+  }
+
+  @include box-shadow(inset 0 1px 0 0 $inset-shadow);
+  @include background-image(linear-gradient($base-color, $stop-gradient));
+  @include transition(background-image 0.2s ease-out);
+  border: 1px solid $border;
+  color: $color;
+  display: inline-block;
+  text-decoration: none;
+  text-shadow: 0 1px 0 $text-shadow;
+  cursor: pointer;
+  -webkit-background-clip: padding-box;
+
+  &:hover:not(:disabled) {
+    $base-color-hover: darken($base-color, 3%);
+    $stop-gradient-hover: darken($base-color, 13%);
+
+    @if $grayscale == true {
+      $base-color-hover:    grayscale($base-color-hover);
+      $stop-gradient-hover: grayscale($stop-gradient-hover);
+    }
+
+    @include background-image(linear-gradient($base-color-hover, $stop-gradient-hover));
+  }
+
+  &:active:not(:disabled) {
+    $border-active:       adjust-color($base-color, $saturation: 9%, $lightness: -14%);
+    $inset-shadow-active: adjust-color($base-color, $saturation: 7%, $lightness: -17%);
+
+    @if $grayscale == true {
+      $border-active:       grayscale($border-active);
+      $inset-shadow-active: grayscale($inset-shadow-active);
+    }
+
+    border: 1px solid $border-active;
+    @include box-shadow(inset 0 1px 2px $inset-shadow-active);
+  }
+}
