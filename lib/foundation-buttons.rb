@@ -2,6 +2,6 @@ require "foundation-buttons/version"
 
 module Foundation
   module Buttons
-    # Your code goes here...
+    require 'foundation-buttons/engine' if defined?(Rails)
   end
 end
